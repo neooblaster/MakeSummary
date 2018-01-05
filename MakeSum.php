@@ -39,27 +39,21 @@ class MakeSum
             'color_kwd' => '39'
         ],
         'separator' => ',',
-        'shortopt' => "h",
+        'shortopt' => "hd:",
         "longopt" => [
-            "add-languages:",
-            "complete",
-            "default",
-            "deploy",
-            "directory:",
-            "dir:",
-            "export",
-            "export-dir:",
-            "finalize",
-            "from:",
             "help",
-            "import",
-            "import-dir:",
-            "install",
-            "preserve-files",
-            "remove-languages:",
-            "remove-langs:",
-            "set-default-lang:",
-            "silent",
+            "dir:"
+        ],
+        "lang" => [
+            "markdown" => [
+                "extension" => "/md$/i",
+                "insertTag" => '[](MakeSummary)',
+                "openTag" => '[](BeginSummary)',
+                "closeTag" => '[](EndSummary)'
+            ]
+        ],
+        "aliases" => [
+            "md" => "markdown"
         ]
     ];
 
@@ -77,6 +71,11 @@ class MakeSum
      * @var array $argv
      */
     protected $argv = null;
+
+    /**
+     * @var string $defaultLang Langage par default définie pour traiter l'emplacement demandé.
+     */
+    protected $defaultLang = "markdown";
 
     /**
      * @var bool|resource $psdtout Pointeur vers la ressource de sortie standard.
@@ -117,14 +116,31 @@ class MakeSum
     }
 
     /**
-     * Execution du script.
+     * Exécution du script.
+     *
+     * @return bool
      */
     public function run ()
     {
         $options = $this->argv;
         $showHelp = true;
 
-        $this->help();
+        $directory = @($options["d"]) ?: (@$options["dir"]) ?: $this->workdir;
+
+        $fullPath = (preg_match("#^\/#", $directory)) ? $directory : $this->workdir . '/' . $directory;
+
+        // Afficher l'aide si demandée et s'arrêter là.
+        if (
+            array_key_exists("h", $options)
+            || array_key_exists("help", $options)
+        ) {
+            $this->help();
+            return true;
+        }
+
+        //
+
+        return true;
     }
 
     /**
@@ -143,6 +159,9 @@ class MakeSum
         
 Usage : $name [OPTIONS]
 
+
+
+-d, --dir   Spécifie l'emplacement de travail.
 HELP;
         fwrite($this->psdtout, $man . PHP_EOL);
         if ($level) die($level);
@@ -247,7 +266,7 @@ HELP;
 
 
 /**
- * Instanciation à la volée.
+ * Instanciation à la volée et exécution.
  */
 $options = getopt(
     MakeSum::OPTIONS['shortopt'],
