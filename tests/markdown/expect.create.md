@@ -13,28 +13,21 @@
 
 [](EndSummary)
 
-## Niveau 1.1. Edited
 
-### Niveau 2.1. Edited
+## Level 1.1
 
-#### Niveau 3.1. Edited
+### Level 2.1
 
-#### Niveau 3.2. Edited
+#### Level 3.1
 
-#### Niveau 3.3. Edited
+#### Level 3.2
 
-### Niveau 2.2. Edited
+#### Level 3.3
 
-### Niveau 2.3. Edited
+### Level 2.2.
 
-## Niveau 1.2. Edited
+### Level 2.3.
 
-## Niveau 1.3. Edited
+## Level 1.2
 
-## Niveau 1.4. Created
-
-### Niveau 2.1. Created
-
-#### Niveau 3.1. Created
-
-##### Niveau 4.1. Created
+## Level 1.3
