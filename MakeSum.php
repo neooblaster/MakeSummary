@@ -32,7 +32,7 @@ use InvalidArgumentException;
 class MakeSum
 {
     /**
-     * Liste des différentes options utilisée dans la classe Command.
+     * Liste des différentes options utilisée dans la classe MakeSum.
      */
     const OPTIONS = [
         'colors' => [
@@ -81,7 +81,7 @@ class MakeSum
     ];
 
     /**
-     * @var array $langRegister Registre des configurations fonctionnel par language de développement.
+     * @var array $langRegister Registre des configurations fonctionnelles par langage de développement.
      */
     protected $langRegister = [
         "markdown" => [
@@ -98,7 +98,11 @@ class MakeSum
             "substitution" => [
                 "chars" => [
                     "\s" => "-",
-                    "\." => ""
+                    "\." => "",
+                    "'" => "",
+                    "`" => "",
+                    ":" => "",
+                    "-{2,}" => "-"
                 ],
                 "functions" => [
                     "urlencode" => [],
@@ -294,7 +298,7 @@ HELP;
             $dir = opendir($path);
 
             while ($file = readdir($dir)) {
-                // Ignorer les référnces de navigation.
+                // Ignorer les références de navigation.
                 if (preg_match("/^\.{1,2}$/", $file)) continue;
 
                 $this->parse($path . '/' . $file);
@@ -356,6 +360,7 @@ HELP;
              * Phase de traitement du texte.
              *
              * @var string  $text            Text à traiter.
+             * @var array   $titles          Liste des titres identifiés.
              * @var array   $config          Ensemble des paramètre de configuration du language.
              * @var string  $insertTag       Balise d'insertion du sommaire.
              * @var string  $openTag         Balise ouvrante du sommaire.
@@ -376,6 +381,7 @@ HELP;
              * @var string  $stringMatch     Index de capture dans lequel le titre est stocké.
              */
             $text = file_get_contents($path);
+            $titles = [];
 
             $config = $this->langRegister[$configName];
 
@@ -478,7 +484,7 @@ HELP;
                  */
                 $entry = $config['substitution']['final'];
                 $level = $title["titleLevel"];
-                $stringTitle =  $title[$stringMatch];
+                $stringTitle =  trim($title[$stringMatch]);
                 $substitution = $stringTitle;
 
                 // Si le niveau n'est pas admis, on l'ignore
