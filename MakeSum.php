@@ -711,5 +711,6 @@ $options = getopt(
 );
 
 $commandName = basename($_SERVER['SCRIPT_NAME']);
+$workdir = ($_SERVER["PWD"]) ?: '.';
 
-(new MakeSum($_SERVER["PWD"], $options, $commandName))->__run();
+(new MakeSum($workdir, $options, $commandName))->__run();

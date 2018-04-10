@@ -1,0 +1,16 @@
+{
+    "name": "neooblaster/makesummary",
+    "description": "A PHP command to build summaries.",
+    "type": "library",
+    "keywords": ["PHP", "summary", "summurize", "markdown"],
+    "authors": [
+        {
+            "name": "Nicolas DUPRE",
+            "email": "neo-blaster@hotmail.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    }
+}
